@@ -36,13 +36,16 @@ export class AuthService {
       authLoginDto.password,
     );
 
-    if (!passwordMatches)
+    if (!passwordMatches){
       throw new RpcException({
         status: HttpStatus.BAD_REQUEST,
         message: 'Password is incorrect',
       });
+    }
 
-    return userQuery && passwordMatches ? userQuery : null;
+    const { password: ___, ...rest } = userQuery;
+
+    return userQuery && passwordMatches ? rest : null;
   }
 
   /**
